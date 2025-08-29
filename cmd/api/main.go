@@ -55,6 +55,7 @@ func main() {
 		MicrosoftOAuthClientID                string `conf:"microsoft-oauth-client-id,noredact"`
 		MicrosoftOAuthClientSecret            string `conf:"microsoft-oauth-client-secret"`
 		MicrosoftOAuthRedirectURI             string `conf:"microsoft-oauth-redirect-uri,noredact"`
+		MicrosoftOAuthTokenEndpoint           string `conf:"microsoft-oauth-token-endpoint,noredact"`
 		ResendAPIKey                          string `conf:"resend-api-key"`
 		EmailChallengeFrom                    string `conf:"email-challenge-from,noredact"`
 		EmailVerificationEndpoint             string `conf:"email-verification-endpoint,noredact"`
@@ -135,10 +136,11 @@ func main() {
 				GoogleOAuthClientID: config.GoogleOAuthClientID,
 			},
 			MicrosoftClient: &microsoft.Client{
-				HTTPClient:                 http.DefaultClient,
-				MicrosoftOAuthClientID:     config.MicrosoftOAuthClientID,
-				MicrosoftOAuthClientSecret: config.MicrosoftOAuthClientSecret,
-				MicrosoftOAuthRedirectURI:  config.MicrosoftOAuthRedirectURI,
+				HTTPClient:                  http.DefaultClient,
+				MicrosoftOAuthClientID:      config.MicrosoftOAuthClientID,
+				MicrosoftOAuthClientSecret:  config.MicrosoftOAuthClientSecret,
+				MicrosoftOAuthRedirectURI:   config.MicrosoftOAuthRedirectURI,
+				MicrosoftOAuthTokenEndpoint: config.MicrosoftOAuthTokenEndpoint,
 			},
 			ResendClient:              resend.NewClient(config.ResendAPIKey),
 			EmailChallengeFrom:        config.EmailChallengeFrom,

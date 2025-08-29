@@ -13,10 +13,11 @@ import (
 )
 
 type Client struct {
-	HTTPClient                 *http.Client
-	MicrosoftOAuthClientID     string
-	MicrosoftOAuthClientSecret string
-	MicrosoftOAuthRedirectURI  string
+	HTTPClient                  *http.Client
+	MicrosoftOAuthClientID      string
+	MicrosoftOAuthClientSecret  string
+	MicrosoftOAuthRedirectURI   string
+	MicrosoftOAuthTokenEndpoint string
 }
 
 type Profile struct {
@@ -45,7 +46,12 @@ func (c *Client) ExchangeToken(ctx context.Context, code string) (*Profile, erro
 	reqBody.Set("grant_type", "authorization_code")
 	reqBody.Set("code", code)
 
-	req, err := http.NewRequestWithContext(ctx, http.MethodPost, "https://login.microsoftonline.com/common/oauth2/v2.0/token", strings.NewReader(reqBody.Encode()))
+	tokenEndpoint := c.MicrosoftOAuthTokenEndpoint
+	if tokenEndpoint == "" {
+		tokenEndpoint = "https://login.microsoftonline.com/common/oauth2/v2.0/token"
+	}
+
+	req, err := http.NewRequestWithContext(ctx, http.MethodPost, tokenEndpoint, strings.NewReader(reqBody.Encode()))
 	if err != nil {
 		return nil, fmt.Errorf("http: new request: %w", err)
 	}
