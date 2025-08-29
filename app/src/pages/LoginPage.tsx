@@ -68,6 +68,8 @@ function MicrosoftLogin() {
     MICROSOFT_OAUTH_REDIRECT_URI ?? "",
   );
 
+  console.log(microsoftRedirectUri);
+
   return (
     <Button variant="outline" asChild>
       <a
